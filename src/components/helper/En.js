@@ -1,0 +1,15 @@
+export default {
+    login: 'Login',
+    register: 'Register',
+    emailPlaceholder: 'Email....',
+    next: 'Next',
+    noAcc: 'You don’t have an account please ',
+    haveAcc: 'You already have an account please ',
+    security: 'Security',
+    passwordPlaceholder: 'Password....',
+    savePwd: 'Remember Password',
+    conPwdPlaceholder: 'Confirm Password....',
+    back: 'Back',
+    sankyu: 'Thanks For Watching Till The End',
+    logout: 'Logout',
+}

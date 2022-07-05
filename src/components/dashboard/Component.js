@@ -15,7 +15,7 @@ const Component = (props) => {
           <Text style={style.sankyuText}>{local.sankyu}</Text>
           <View style={style.titleContainer}>
               <Text style={style.nameText}>Nyan Linn Htet</Text>
-              <Text style={style.mailText}>{props.data.email}</Text>
+              <Text style={style.mailText}>{props.mailData.email}</Text>
           </View>
       </View>
       <View>

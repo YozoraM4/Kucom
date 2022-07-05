@@ -19,7 +19,7 @@ const Navigator = () => {
   const [userInfo, setUserInfo] = useState();
   const [passInfo, setPassInfo] = useState();
   const [splash, setSplash] = useState(true);
-
+  
   const context = {
     lang,
     auth,
@@ -45,21 +45,21 @@ const Navigator = () => {
 
   const getData = () => {
     const userData = RNSecureKeyStore.get('@user.mail');
-    if (userData) {
-      setAuth(true);
-      setUserInfo(userData);
-      setTimeout(() => {
-        setSplash(false);
-      }, 2000);
-    } else {
-      setAuth(false);
+      if (userData) {
+        setAuth(true);
+        setUserInfo(userData);
         setTimeout(() => {
           setSplash(false);
         }, 2000);
-    }
-  };
+      } else {
+        setAuth(false);
+          setTimeout(() => {
+            setSplash(false);
+          }, 2000);
+      }
+   }
 
-  if (splash) {
+   if (splash) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Image style={{width:wp(80), height:hp(50)}}

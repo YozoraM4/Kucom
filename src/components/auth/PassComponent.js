@@ -23,8 +23,8 @@ const [toggleCheckBox, setToggleCheckBox] = useState(false)
             <TextInput
             style={style.input}
             placeholder= {local.passwordPlaceholder}
-            onChangeText={props.onChangePassword}
-            value={props.passwordValue}
+            onChangeText={props.onChangeLPassword}
+            value={props.lPasswordValue}
             />
             <View style={style.checkBoxContainer}>
                 <CheckBox
@@ -54,8 +54,8 @@ const local = useLocal();
         <TextInput
           style={[style.input, {marginBottom:hp(2.5)}]}
           placeholder= {local.passwordPlaceholder}
-          onChangeText={props.onChangePassword}
-          value={props.passwordValue}
+          onChangeText={props.onChangeRPassword}
+          value={props.rPasswordValue}
         />
         <TextInput
           style={style.input}

@@ -11,9 +11,9 @@ import {useLocal} from '../hook/useLocal'
 import style from '@src/components/auth/Style'
 
 const AuthMail = ({navigation}) => {
-  const {lang, getLang, userInfo, passInfo, getUserInfo} = useContext(AuthContext);
+  const {lang, getLang, getUserInfo} = useContext(AuthContext);
   const [email, setEmail] = useState('')
-  console.log(userInfo, passInfo)
+
   //For Login or Register
   const [hide, setHide] = useState(true);
   const goToRegister =() =>{
@@ -25,41 +25,46 @@ const AuthMail = ({navigation}) => {
 
   //For Language
   const local = useLocal();
-
   const langHandler = value => {
-    getLang(value);
+    RNSecureKeyStore.set("@user.lang", "value", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+      .then(() => {    
+        getLang(value);
+        console.log('language stored')
+      }, (err) => {
+        console.log(err);
+      });
   }
 
   //For Next Action
-  const LoginNextHandler = value =>{
+  const LoginNextHandler = () =>{
     const loginEmail = {
       email: email,
     };
-    try {
-      navigation.navigate('AuthPass', {hide: value})
-    } catch (error) {
-      console.log(error)
-    }
+    const mailData = RNSecureKeyStore.get("@user.mail").then(() => {
+        if (mailData === loginEmail) {
+          navigation.navigate('AuthPass', {isHide: false})
+          console.log('user exit :', loginEmail)
+        } else {
+          console.log("user does not exit")
+        };
+      }, (err) => {
+        console.log(err);
+      });
   }
 
   const nextHandler =()=>{
-    let token = '1234567890';
-
     const regiEmail = {
       email: email,
     };
-    try {
-      RNSecureKeyStore.set("@user.token", "token", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
-      RNSecureKeyStore.set("@user.mail", "regiEmail", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
-    .then(() => {
-        getUserInfo(regiEmail, token)
-        navigation.navigate('AuthPass')
-    }, (err) => {
+
+    RNSecureKeyStore.set("@user.mail", "regiEmail", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+      .then((res) => {
+        navigation.navigate('AuthPass', {isHide: false})
+        getUserInfo(regiEmail)
+        console.log(regiEmail)
+      }, (err) => {
         console.log(err);
-    });
-    } catch (error) {
-      console.log(error)
-    }
+      });
   }
 
   
@@ -71,14 +76,14 @@ return (
     />
     {hide ? 
         <LoginComponent 
-          emailValue = {email}
+          loginEmailValue = {email}
           onChangeEmail={value => setEmail(value)}
           next={LoginNextHandler}
           goRegister={goToRegister}
         /> 
         : 
         <RegisterComponent 
-          emailValue = {email}
+          registerEmailValue = {email}
           onChangeEmail={value => setEmail(value)}
           next={nextHandler}
           goLogin={goToLogin} 

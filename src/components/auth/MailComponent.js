@@ -18,7 +18,7 @@ const LoginComponent = (props) => {
           style={style.input}
           placeholder= {local.emailPlaceholder}
           onChangeText={props.onChangeEmail}
-          value={props.emailValue}
+          value={props.loginEmailValue}
         />
 
         <TouchableOpacity onPress={props.next} style={style.btnContainer}>
@@ -51,7 +51,7 @@ const RegisterComponent = (props) => {
           style={style.input}
           placeholder= {local.emailPlaceholder}
           onChangeText={props.onChangeEmail}
-          value={props.emailValue}
+          value={props.registerEmailValue}
         />
 
         <TouchableOpacity onPress={props.next} style={style.btnContainer}>

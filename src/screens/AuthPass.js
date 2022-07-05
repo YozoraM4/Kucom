@@ -12,47 +12,46 @@ import style from '@src/components/auth/Style'
 
 const AuthPass = ({route}) => {
   const {getPassInfo, getAuth} = useContext(AuthContext);
-  const hide = route.params;
-
+  const {isHide} = route.params;
+  
   //For Login and Register Actions
-  const [password, setPassword] = useState('')
+  const [lPassword, setLPassword] = useState('')
+  const [rPassword, setRPassword] = useState('')
   const [conPass, setConPass] = useState('')
+
   const LoginHandler = () =>{
     const loginPass = {
-      password: password,
+      password: lPassword,
     }
     try {
-          getPassInfo(loginPass)
-          getAuth(true)
-    } catch (error) {
-      
-    }
-  }
-
-  const RegisterHandler =()=>{
-    const regiPass = {
-      password: password,
-      conPass: conPass,
-    };
-    try {
-      RNSecureKeyStore.set("@user.data", "regiPass", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
-      .then(() => {
-          getPassInfo(regiPass)
-          getAuth(true)
-      }, (err) => {
-          console.log(err);
-      });
+        getPassInfo(loginPass)
+        getAuth(true)
+        console.log("auth :",auth)
     } catch (error) {
       console.log(error)
     }
   }
 
-  if (hide) {
+  const RegisterHandler =()=>{
+    const regiPass = {
+      password: rPassword,
+      conPass: conPass,
+    };
+    RNSecureKeyStore.set("@user.pass", "regiPass", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+      .then((res) => {
+        getPassInfo(regiPass);
+        getAuth(true);
+      }, (err) => {
+        console.log(err);
+      });
+  }
+
+  if (isHide) {
     return (
       <View style={style.container}>
         <LoginPassComponent 
-          passwordValue = {password}
-          onChangePassword={value => setPassword(value)}
+          lPasswordValue = {lPassword}
+          onChangeLPassword={value => setLPassword(value)}
           login={LoginHandler}
         />
       </View>
@@ -61,8 +60,8 @@ const AuthPass = ({route}) => {
     return (
       <View style={style.container}>
         <RegisterPassComponent 
-          passwordValue = {password}
-          onChangePassword={value => setPassword(value)}
+          rPasswordValue = {rPassword}
+          onChangeRPassword={value => setRPassword(value)}
           conPassValue={conPass}
           onChangeConPass={value => setConPass(value)}
           register={RegisterHandler}

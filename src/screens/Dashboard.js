@@ -13,10 +13,9 @@ const Dashboard = () => {
   const {passInfo, getAuth, userInfo} = useContext(AuthContext);
   console.log(userInfo, passInfo)
   const logoutHandler= () => {
-    RNSecureKeyStore.remove("@user.token")
+    RNSecureKeyStore.remove("@user.mail")
     .then(() => {
       getAuth(false)
-      console.log(userInfo)
     }, (err) => {
       console.log(err);
     });
@@ -24,7 +23,7 @@ const Dashboard = () => {
   return (
     <View style={stle.container}>
       <Component
-        data={userInfo}
+        mailData={userInfo}
         logout={logoutHandler}
       />
     </View>
